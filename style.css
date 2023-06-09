@@ -1,0 +1,15 @@
+:root {
+  --color-dark: #1f2d36;
+  --color-light: #fafafa;
+}
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+html {
+  font-size: 62.5rem;
+}
+body {
+  font-family: sans-serif;
+}
