@@ -91,8 +91,10 @@ function findCountry(inputValue) {
   if (!inputValue.search("Filter") > -1) {
     finalData.forEach((country) => {
       if (
-        country.name.common.toLowerCase().search(inputValue) > -1 ||
-        country.name.official.toLowerCase().search(inputValue) > -1
+        country.name.common.toLowerCase().search(inputValue.toLowerCase()) >
+          -1 ||
+        country.name.official.toLowerCase().search(inputValue.toLowerCase()) >
+          -1
       ) {
         tempData.push(country);
       }
