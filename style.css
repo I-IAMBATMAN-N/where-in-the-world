@@ -222,6 +222,7 @@ body.mode .country {
   .section {
     grid-template-columns: 1fr;
     padding: 0 6.4rem;
+    padding-bottom: 6.4rem;
   }
   .country section {
     padding: 2.4rem;
