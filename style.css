@@ -207,6 +207,16 @@ body.mode .country {
   .section {
     grid-template-columns: repeat(2, 1fr);
   }
+  .form {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 2.4rem;
+  }
+  .input-container:first-child {
+    width: 100%;
+  }
 }
 @media (max-width: 36em) {
   .section {
