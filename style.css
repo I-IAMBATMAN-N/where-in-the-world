@@ -192,3 +192,25 @@ body.mode .country {
 .active {
   display: none !important;
 }
+@media (max-width: 55em) {
+  html {
+    font-size: 46%;
+  }
+  .section {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 48em) {
+  .section {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 36em) {
+  .section {
+    grid-template-columns: 1fr;
+    padding: 0 6.4rem;
+  }
+  .country section {
+    padding: 2.4rem;
+  }
+}
