@@ -22,6 +22,22 @@ body {
   color: var(--color-dark);
   background-color: var(--color-light);
 }
+body.mode,
+body.mode .header,
+body.mode .input-container,
+body.mode .btn--mode,
+body.mode .input,
+body.mode .btn--input,
+body.mode #countries,
+body.mode .country {
+  color: var(--color-light);
+  background-color: var(--color-dark);
+}
+body.mode .header,
+body.mode .input-container,
+body.mode .country {
+  box-shadow: -1px 1px 5px 0px rgba(255, 255, 255, 0.12);
+}
 .container {
   width: 100%;
   max-width: 1024px;
@@ -135,6 +151,9 @@ body {
   background-color: #1f2d3600;
 
   flex: 0 0 85%;
+}
+.input:focus {
+  outline: none;
 }
 #countries {
   text-align: center;

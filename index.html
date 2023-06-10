@@ -5,6 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!--  -->
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+
     <link rel="stylesheet" href="style.css" />
     <script defer src="script.js"></script>
     <title>Where-in-the-World</title>
@@ -16,16 +25,20 @@
           <p class="logo--text">Where in the world?</p>
         </div>
         <a href="#" class="btn--mode"
-          ><span>Dark Mode</span
-          ><span style="display: none">Light Mode</span></a
+          ><span><ion-icon name="moon-outline"></ion-icon> Dark Mode</span
+          ><span class="active"
+            ><ion-icon name="sunny-outline"></ion-icon>Light Mode</span
+          ></a
         >
       </div>
     </header>
-    <div class="container">
+    <div class="container content">
       <form class="form" action="" autocomplete="off">
         <div class="input-container">
+          <button class="btn--input">
+            <ion-icon name="search-outline"></ion-icon>
+          </button>
           <input type="text" class="input" />
-          <button class="btn--input">&#128269;</button>
         </div>
         <div class="input-container">
           <!-- <label for="countries">Filter by region</label> -->

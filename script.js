@@ -131,3 +131,15 @@ function articleListenner(articles) {
     });
   });
 }
+
+const btnMode = document.querySelector(".btn--mode");
+const btnModeSpans = document.querySelectorAll(".btn--mode span");
+const body = document.querySelector("body");
+
+btnMode.addEventListener("click", function () {
+  btnModeSpans.forEach((span) => {
+    span.classList.toggle("active");
+    console.log("Done");
+  });
+  body.classList.toggle("mode");
+});
