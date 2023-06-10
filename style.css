@@ -73,6 +73,7 @@ body.mode .country {
 .input-container {
   display: flex;
 
+  min-width: fit-content;
   width: 40%;
   background-color: #ffff;
 
@@ -174,6 +175,8 @@ body.mode .country {
   display: flex;
   align-items: center;
   justify-content: center;
+
+  padding: 1.6rem;
 }
 .btn--mode {
   text-decoration: none;
