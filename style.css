@@ -71,9 +71,6 @@ body.mode .country {
   align-items: center;
   justify-content: space-between;
 }
-.form {
-  padding: 0 2.4rem;
-}
 .input-container {
   display: flex;
 
@@ -286,9 +283,21 @@ body.mode .country {
 .list {
   list-style: none;
 
-  display: flex;
-  gap: 0.6rem;
+  width: 100%;
 }
 .list-item {
+  display: inline-block;
+
   font-size: 1.2rem;
+}
+.btn--back {
+  background-color: #ffff;
+  border: none;
+
+  box-shadow: -1px 1px 5px 0px rgba(0, 0, 0, 0.12);
+
+  padding: 1.6rem;
+}
+.btn--back:hover {
+  cursor: pointer;
 }
