@@ -30,7 +30,8 @@ body.mode .input,
 body.mode .btn--input,
 body.mode #countries,
 body.mode .country,
-body.mode .country-full {
+body.mode .country-full,
+body.mode .logo {
   color: var(--color-light);
   background-color: var(--color-dark);
 }
@@ -60,7 +61,9 @@ body.mode .country {
   box-shadow: -1px 1px 5px 0px rgba(0, 0, 0, 0.12);
 }
 .logo {
+  text-decoration: none;
   font-weight: bold;
+  color: var(--color-dark);
 }
 .header .container,
 .form {
