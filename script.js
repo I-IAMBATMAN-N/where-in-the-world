@@ -1,272 +1,288 @@
 "use strict";
 
-// Prepare Functions
-// const fetchURLs = {
-//   all: "https://restcountries.com/v3.1/all",
-//   byName: "https://restcountries.com/v3.1/name/",
-// };
+const fetchURLs = {
+  all: "https://restcountries.com/v3.1/all",
+  byName: "https://restcountries.com/v3.1/name/",
+  byCode: "https://restcountries.com/v3.1/alpha/",
+  byRegion: "https://restcountries.com/v3.1/region/",
+};
 
-// function fetchData(url = fetchURLs.all) {
-//   fetch(url)
-//     .then((response) => {
-//       return response.json();
-//     })
-//     .then((responseData) => {
-//       const data = responseData;
-
-//       // console.clear();
-//       finalData = data;
-//       return data;
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// }
-
+// Search form DOM data
 const form = document.querySelector(".form");
 const input = document.querySelector(".input");
 const searchBtn = document.querySelector(".btn--input");
-const countries = document.querySelector("#countries");
+const selectRegion = document.querySelector("#countries");
+// const formInnerHTML = form.innerHTML;
 
+// sections DOM data
 const section = document.querySelector(".section");
-
 const countrySection = document.querySelector(".country-section");
-console.log(countrySection);
+const containers = [section, countrySection];
 
-let finalData;
+const btnFormBack = document.querySelector(".btn--back");
+const inputContainers = document.querySelectorAll(".input-container");
+const formElements = [btnFormBack, ...inputContainers];
 
 //
 const btnMode = document.querySelector(".btn--mode");
 const btnModeSpans = document.querySelectorAll(".btn--mode span");
 const body = document.querySelector("body");
 
-btnMode.addEventListener("click", function () {
-  btnModeSpans.forEach((span) => {
-    span.classList.toggle("active");
-    console.log("Done");
+let dataAll = {};
+let mainData = {};
+
+const countriesAndCodes = [];
+
+function displayRelevantFormElement() {
+  formElements.forEach((element) => {
+    element.classList.toggle("active");
   });
-  body.classList.toggle("mode");
-});
-
-/* DEFAULT --------------------------------------------------- */
-// onLoad
-// displays all countries on window load
-function displayAll() {
-  fetch(`https://restcountries.com/v3.1/all`)
-    .then((response) => {
-      return response.json();
-    })
-    .then((responseData) => {
-      const data = responseData;
-
-      // console.clear();
-      console.log(data);
-
-      displaySmall(data);
-      finalData = data;
-      return data;
-    })
-    .catch((err) => {
-      console.log("--------------------------------------", err);
-    });
 }
-
-// displays relevant countries acc. to passed object
-function displaySmall(object) {
-  function articleListenner(articles) {
-    articles.forEach((article) => {
-      article.addEventListener("click", (e) => {
-        let text = e.target
-          .closest(".country")
-          .children[1].children[0].innerText.toLowerCase();
-
-        //
-        fetch(`https://restcountries.com/v3.1/name/${text}`)
-          .then((response) => {
-            return response.json();
-          })
-          .then((responseData) => {
-            const [data] = responseData;
-
-            console.log(data);
-            displayLarge(data);
-
-            // return data;
-          })
-          .catch((err) => {
-            console.log("--------------------------------------", err);
-          });
-      });
-    });
-  }
-
-  //
+function displayRelevantSection() {
+  containers.forEach((container) => {
+    container.classList.toggle("active");
+  });
+}
+function displayCountries(countries) {
   let element = ``;
-  object.forEach((item) => {
-    //
+  countries.forEach((country) => {
     element += `
-      <article class="country">
-      <img src="${item.flags.png}" alt="${item.flags.alt}" class="img"/>
-        <section> 
-        <h3 class="country-name">${item.name.official}</h3>
-          <h5 class="data">Population: <span>${(
-            +item.population / 1000000
-          ).toFixed(1)} mil.</span></h5>
-          <h5 class="data">Region: <span>${item.region}</span></h5>
-          <h5 class="data">Capital: <span>${
-            item.capital || "no capital"
-          }</span></h5>
-        </section>
-      </article>
-    `;
+    <article class="country">
+    <img src="${country.flags.png}" alt="${country.flags.alt}" class="img"/>
+      <section> 
+      <h3 class="country-name">${country.name.official}</h3>
+        <h5 class="data">Population: <span>${(
+          +country.population / 1000000
+        ).toFixed(1)} mil.</span></h5>
+        <h5 class="data">Region: <span>${country.region}</span></h5>
+        <h5 class="data">Capital: <span>${
+          country.capital || "no capital"
+        }</span></h5>
+      </section>
+    </article>
+  `;
   });
   section.innerHTML = ``;
   section.innerHTML += element;
-  articleListenner(section.querySelectorAll(".country"));
+  countriesEventListenner();
 }
-//
-// form functions
-// - call function displaying searched country
-form.addEventListener("submit", function () {
-  displaySearchedCountry(input.value);
-});
-//
-// onload calls function that displays all countries
-window.addEventListener("load", () => {
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
+
+// Design functions
+// mode button event listenner
+// changes theme by toggle .active class on body element
+btnMode.addEventListener("click", () => {
+  btnModeSpans.forEach((span) => {
+    span.classList.toggle("active");
   });
-  displayAll();
+  body.classList.toggle("mode");
+});
+//
+btnFormBack.addEventListener("click", () => {
+  displayRelevantFormElement();
+  displayRelevantSection();
+});
+//------------------------------------------------------------------ ++++++++++ ------------------------------------------------------------------
+//------------------------------------------------------------------ CALLSTACK -------------------------------------------------------------------
+//------------------------------------------------------------------ ++++++++++ ------------------------------------------------------------------
+
+//
+// ---------- onLoad functions ----------
+//
+// display all countires on window load
+// using async getAll() for fetching datas
+async function getAll() {
+  try {
+    const res = await fetch(fetchURLs.all);
+    const data = res.json();
+    //
+    return data;
+  } catch (err) {
+    console.error(err);
+  }
+}
+window.addEventListener("load", () => {
+  //
+  getAll().then((data) => {
+    console.log("NOVY", data);
+    displayCountries(data);
+
+    //
+    // filling countriesAndCodes array with new created object containing coutryCode and countryName only
+    // array used in future for defining country neighbours name from country code
+    data.forEach((data) => {
+      countriesAndCodes.push({
+        countryCode: data.cca2,
+        countryName: data.name.common,
+      });
+    });
+
+    //
+    dataAll = data;
+
+    //
+    let neighboursNames = [];
+
+    countriesAndCodes.forEach((countryAndCode) => {
+      data.forEach((dataItem) => {});
+    });
+
+    //
+    mainData = data;
+  });
+});
+//------------------------------------------------------------------ ++++++++++ ------------------------------------------------------------------
+
+//
+// ---------- Search functions ----------
+//
+// display all countires on region select
+// using async getSelected() for fetching datas
+async function getSelected(region) {
+  try {
+    const res = await fetch(fetchURLs.byRegion + region);
+    const data = res.json();
+    //
+    return data;
+  } catch (err) {
+    console.error(err);
+  }
+}
+function getSelected2(region) {
+  const selectedData = [];
+  dataAll.forEach((data) => {
+    if (data.region.toLowerCase().search(region) > -1) {
+      selectedData.push(data);
+    }
+  });
+
+  mainData = selectedData;
+  // console.log("selectedData", selectedData);
+  displayCountries(selectedData);
+}
+selectRegion.addEventListener("change", function (e) {
+  let region = e.target.value.toLowerCase();
+
+  // getSelected(region).then((data) => {
+  //   displayCountries(data);
+  //   mainData = data;
+  // });
+
+  getSelected2(region);
 });
 
 //
-// regions option element onchange event listenner
-countries.addEventListener("change", function (e) {
-  //
-  function getByRegion(region) {
-    if (region) {
-      fetch(`https://restcountries.com/v3.1/region/${region}`)
-        .then((response) => {
-          return response.json();
-        })
-        .then((responseData) => {
-          const data = responseData;
-
-          console.clear();
-          console.log(data);
-
-          displaySmall(data);
-          finalData = data;
-          // return data;
-        })
-        .catch((err) => {
-          console.log("--------------------------------------", err);
-        });
-    } else return;
-  }
-  getByRegion(
-    e.target.value.search("Filter") > -1 ? undefined : e.target.value
-  );
-});
-
-function displaySearchedCountry(inputValue) {
-  let tempData = [];
-  if (!inputValue.search("Filter") > -1) {
-    finalData.forEach((country) => {
-      if (
-        country.name.common.toLowerCase().search(inputValue.toLowerCase()) >
-          -1 ||
-        country.name.official.toLowerCase().search(inputValue.toLowerCase()) >
-          -1
-      ) {
-        tempData.push(country);
-      }
-    });
-    // console.log(finalData);
-    displaySmall(tempData);
+// display all countires on form submit
+// using async getByName() for fetching datas
+async function getByName(name) {
+  try {
+    const res = await fetch(fetchURLs.byName + name);
+    const data = res.json();
+    //
+    return data;
+  } catch (err) {
+    console.error(err);
   }
 }
-function displayLarge(country) {
+form.addEventListener("submit", function (e) {
+  console.log("SUBMIIIIT AS FUCK");
   //
-  function fillNeighbors(neighbours) {
-    function getCountryName(countryCode) {
-      fetch(`https://restcountries.com/v3.1/alpha/${countryCode}`)
-        .then((response) => {
-          return response.json();
-        })
-        .then((responseData) => {
-          const [data] = responseData;
+  e.preventDefault();
+  let searchWord = String(input.value).toLowerCase();
+  //
+  function getSearched(word) {
+    let searchedData = [];
+    //
+    mainData.forEach((data) => {
+      if (
+        data.name.official.toLowerCase().search(word) > -1 ||
+        data.name.common.toLowerCase().search(word) > -1
+      ) {
+        searchedData.push(data);
+      }
+    });
 
-          console.log("country name", data.name.common);
+    return searchedData;
+  }
+  //
 
-          return data.name.common;
-        })
-        .catch((err) => {
-          console.log("--------------------------------------", err);
-        });
-    }
-    if (neighbours) {
-      let element = "";
+  displayCountries(getSearched(searchWord));
+});
+//------------------------------------------------------------------ ++++++++++ ------------------------------------------------------------------
+
+//
+// Displays country in detail
+function countriesEventListenner() {
+  //
+  const countriesSmall = document.querySelectorAll(".country");
+  //
+  countriesSmall.forEach((countrySmall) => {
+    countrySmall.addEventListener("click", function (e) {
+      //
+      let name = e.target
+        .closest(".country")
+        .children[1].children[0].innerText.toLowerCase();
+      console.log(name);
 
       //
+      // display relevant elements
+      // toggle section and form containers .active class state
 
-      neighbours.forEach((neighbour) => {
-        console.log("neighbour-22", neighbour);
-        element += `
-        <li class="list-item">${neighbour}</li>
-        `;
+      //
+      getByName(name).then((resData) => {
+        //
+        const [data] = resData;
+        //
+        displayRelevantSection();
+        displayRelevantFormElement();
+        displayCountry(data);
       });
-      return element;
-    } else
-      return `
-        <li class="list-item">No Neighbour</li>
-        `;
-  }
-  //
-  function getNativeName() {
-    if (country.name.nativeName) {
-      //
-      const { ...nativeNames } = country.name.nativeName;
-      const objKeys = Object.keys(country.name.nativeName);
+    });
+  });
 
-      return nativeNames[objKeys[0]].official;
-    } else {
-      return "No Native Name";
+  function displayCountry(country) {
+    //
+    const countryCodes = country.borders || undefined;
+    const neighboursArray = [];
+    const neighboursNames = [];
+
+    const currencies = Object.keys(country.currencies) || "none";
+    const languages = Object.keys(country.languages) || "none";
+
+    // ---------- Get Neighbours ----------
+    async function getNeighbours(code) {
+      try {
+        const res = await fetch(fetchURLs.byCode + code);
+        const data = res.json();
+        //
+        return data;
+      } catch (err) {
+        console.error(err);
+      }
     }
-  }
-  //
-  function getCurrencies() {
-    let string = "";
-    const currencyKeys = Object.keys(country.currencies);
-    currencyKeys.forEach((key, index) => {
-      string += key;
-      if (index < currencyKeys.length - 1) {
-        string += ", ";
-      }
-    });
-    return string;
-  }
-  //
-  function getLanguages() {
-    let string = "";
-    const languagesKeys = Object.keys(country.languages);
-    languagesKeys.forEach((key, index) => {
-      string += key;
-      if (index < languagesKeys.length - 1) {
-        string += ", ";
-      }
-    });
-    return string;
-  }
+    if (countryCodes) {
+      countryCodes.forEach((code) => {
+        getNeighbours(code).then((resData) => {
+          const [data] = resData;
+          neighboursArray.push(
+            `<li class="list-item">${data.name.common}</li>`
+          );
+        });
+      });
 
-  let element = `
+      //
+    }
+    //
+    // Full country element structure layout
+    let element = `
     <article class="country-full">
       <img src="${country.flags.svg}" alt="${
-    country.flags.alt || country.name.official
-  } flag" width="500px" />
+      country.flags.alt || country.name.official
+    } flag" width="500px" />
       <section>
         <h3 class="name">${country.name.official}</h3>
-        <h5 class="data">Native Name: <span>${getNativeName()}</span></h5>
+        <h5 class="data">Native Name: <span>${
+          country.name.nativeName.common || "none"
+        }</span></h5>
         <h5 class="data">
           Population: <span>${+(country.population / 1000000).toFixed(
             1
@@ -274,34 +290,25 @@ function displayLarge(country) {
         </h5>
         <h5 class="data">Region: <span>${country.region}</span></h5>
         <h5 class="data">
-          Sub Region: <span>${country.subRegion || "no subregion"}</span>
+          Sub Region: <span>${country.subRegion || "none"}</span>
         </h5>
         <h5 class="data">
-          Capital: <span>${country.capital[0] || "no capital"}</span>
+          Capital: <span>${country.capital || "none"}</span>
         </h5>
         <br />
         <h5 class="data">Top Level Domain: <span>${country.tld}</span></h5>
-        <h5 class="data">Currencies: <span>${getCurrencies()}</span></h5>
-        <h5 class="data">Languages: <span>${getLanguages()}</span></h5>
+        <h5 class="data">Currencies: <span>${currencies}</span></h5>
+        <h5 class="data">Languages: <span>${languages}</span></h5>
         <br />
         <h5 class="data">Neighbours: </h5>
         <ul class="list">
-            ${fillNeighbors(country.borders)}
+            ${countryCodes || "no neighbours"}
         </ul>
-      </section>    
+      </section>
     </article>
   `;
-
-  const inputContainers = form.querySelectorAll(".input-container");
-  //
-  inputContainers.forEach((container) => {
-    container.classList.toggle("active");
-  });
-  //
-  form.innerHTML += `
-    <button class="btn--back"> back </button>
-  `;
-  //
-  section.style.display = "none";
-  countrySection.innerHTML += element;
+    countrySection.innerHTML = ``;
+    countrySection.innerHTML += element;
+    //
+  }
 }
