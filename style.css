@@ -31,13 +31,15 @@ body.mode .btn--input,
 body.mode #countries,
 body.mode .country,
 body.mode .country-full,
-body.mode .logo {
+body.mode .logo,
+body.mode .btn--back {
   color: var(--color-light);
   background-color: var(--color-dark);
 }
 body.mode .header,
 body.mode .input-container,
-body.mode .country {
+body.mode .country,
+body.mode .btn--back {
   box-shadow: -1px 1px 5px 0px rgba(255, 255, 255, 0.12);
 }
 .container {
@@ -182,6 +184,9 @@ body.mode .country {
 
   padding: 1.6rem;
 }
+.btn--input:hover {
+  cursor: pointer;
+}
 .btn--mode {
   text-decoration: none;
   color: #1f2d36;
@@ -217,8 +222,9 @@ body.mode .country {
     align-items: flex-start;
 
     gap: 2.4rem;
+    padding: 0 6.4rem;
   }
-  .input-container:first-child {
+  .input-container:nth-child(2n) {
     width: 100%;
   }
 }
@@ -290,7 +296,12 @@ body.mode .country {
 
   font-size: 1.2rem;
 }
+.list-item:not(:first-child) {
+  margin-left: 0.8rem;
+}
 .btn--back {
+  text-decoration: none;
+  color: #1f2d36;
   background-color: #ffff;
   border: none;
 
