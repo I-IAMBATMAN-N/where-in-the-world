@@ -205,9 +205,6 @@ body.mode .btn--back {
   display: none !important;
 }
 @media (max-width: 55em) {
-  html {
-    font-size: 46%;
-  }
   .section {
     grid-template-columns: repeat(3, 1fr);
   }
