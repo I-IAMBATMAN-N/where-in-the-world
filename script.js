@@ -264,12 +264,37 @@ function countriesEventListenner() {
         getNeighbours(code).then((resData) => {
           const [data] = resData;
           neighboursArray.push(
-            `<li class="list-item">${data.name.common}</li>`
+            `<li class="list-item">
+              <a href="#">${data.name.common}</a>
+            </li>`
           );
         });
       });
 
       //
+    }
+
+    function displayNeighbours() {
+      //
+      let element = ``;
+      //
+      if (countryCodes) {
+        countryCodes.forEach((code) => {
+          mainData.forEach((data) => {
+            if (
+              data.cca2 === code ||
+              data.cca3 === code ||
+              data.cioc === code
+            ) {
+              element += `<li class="list-item">${data.name.common}</li>`;
+              console.log(data.name.common);
+            }
+          });
+        });
+      } else {
+        element = `<span>No Neighbours</span>`;
+      }
+      return element;
     }
     //
     // Full country element structure layout
@@ -302,7 +327,7 @@ function countriesEventListenner() {
         <br />
         <h5 class="data">Neighbours: </h5>
         <ul class="list">
-            ${countryCodes || "no neighbours"}
+            ${displayNeighbours()}
         </ul>
       </section>
     </article>
