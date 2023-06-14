@@ -313,6 +313,9 @@ body.mode .list-item {
   .country-full {
     flex-direction: column;
   }
+  .country-full img {
+    width: 100%;
+  }
 }
 @media (max-width: 36em) {
   .section {
