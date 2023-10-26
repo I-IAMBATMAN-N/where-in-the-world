@@ -337,3 +337,15 @@ function countriesEventListenner() {
     //
   }
 }
+
+const regExpNum = /[0-9]/;
+
+input.addEventListener("input", function (e) {
+  //
+  if (regExpNum.test(e.target.value)) {
+    //
+    alert("No numbers in input please");
+
+    input.value = "";
+  }
+});
