@@ -346,7 +346,7 @@ input.addEventListener("input", function (e) {
     //
     alert("No numbers in input please");
 
-    input.value = "";
+    input.value = input.value.slice(0, -1);
   }
 
   let searchWord = String(input.value).toLowerCase();
