@@ -184,29 +184,29 @@ async function getByName(name) {
   }
 }
 form.addEventListener("submit", function (e) {
-  console.log("SUBMIIIIT AS FUCK");
   //
   e.preventDefault();
-  let searchWord = String(input.value).toLowerCase();
-  //
-  function getSearched(word) {
-    let searchedData = [];
-    //
-    mainData.forEach((data) => {
-      if (
-        data.name.official.toLowerCase().search(word) > -1 ||
-        data.name.common.toLowerCase().search(word) > -1
-      ) {
-        searchedData.push(data);
-      }
-    });
+  // let searchWord = String(input.value).toLowerCase();
+  // //
+  // function getSearched(word) {
+  //   let searchedData = [];
+  //   //
+  //   mainData.forEach((data) => {
+  //     if (
+  //       data.name.official.toLowerCase().search(word) > -1 ||
+  //       data.name.common.toLowerCase().search(word) > -1
+  //     ) {
+  //       searchedData.push(data);
+  //     }
+  //   });
 
-    return searchedData;
-  }
-  //
+  //   return searchedData;
+  // }
+  // //
 
-  displayCountries(getSearched(searchWord));
+  // displayCountries(getSearched(searchWord));
 });
+
 //------------------------------------------------------------------ ++++++++++ ------------------------------------------------------------------
 
 //
@@ -348,4 +348,24 @@ input.addEventListener("input", function (e) {
 
     input.value = "";
   }
+
+  let searchWord = String(input.value).toLowerCase();
+  //
+  function getSearched(word) {
+    let searchedData = [];
+    //
+    mainData.forEach((data) => {
+      if (
+        data.name.official.toLowerCase().search(word) > -1 ||
+        data.name.common.toLowerCase().search(word) > -1
+      ) {
+        searchedData.push(data);
+      }
+    });
+
+    return searchedData;
+  }
+  //
+
+  displayCountries(getSearched(searchWord));
 });
