@@ -193,15 +193,19 @@ body.mode .list-item {
   cursor: pointer;
 }
 .btn--mode {
+  height: 100%;
+
   text-decoration: none;
   color: #1f2d36;
 
-  display: flex;
-  align-items: center;
-  gap: 1.4rem;
-
   font-size: 1.2rem;
   font-weight: bold;
+}
+.btn--mode span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
 }
 .btn--mode ion-icon {
   font-size: 1.6rem;
@@ -229,6 +233,9 @@ body.mode .list-item {
   border-radius: 1rem;
 
   padding: 2.4rem;
+
+  background-color: #fff;
+  box-shadow: -1px 1px 5px 0px rgba(0, 0, 0, 0.12);
 }
 .country-full img {
   display: inline-block;
