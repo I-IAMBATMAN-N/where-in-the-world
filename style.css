@@ -19,6 +19,8 @@ body {
   flex-direction: column;
   gap: 3.2rem;
 
+  position: relative;
+
   color: var(--color-dark);
   background-color: var(--color-light);
 }
