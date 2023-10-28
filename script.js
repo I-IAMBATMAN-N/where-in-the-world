@@ -103,7 +103,7 @@ async function getAll() {
 window.addEventListener("load", () => {
   //
   getAll().then((data) => {
-    console.log("NOVY", data);
+    // console.log("NOVY", data);
     displayCountries(data);
 
     //
@@ -221,7 +221,7 @@ function countriesEventListenner() {
       let name = e.target
         .closest(".country")
         .children[1].children[0].innerText.toLowerCase();
-      console.log(name);
+      // console.log(name);
 
       //
       // display relevant elements
@@ -287,7 +287,7 @@ function countriesEventListenner() {
               data.cioc === code
             ) {
               element += `<li class="list-item">${data.name.common}</li>`;
-              console.log(data.name.common);
+              // console.log(data.name.common);
             }
           });
         });
