@@ -254,7 +254,7 @@ body.mode .list-item {
 #countries {
   text-align: center;
   font-size: 1.2rem;
-  padding: 1.6rem 0;
+  padding: 1.6rem;
 
   background-color: #1f2d3600;
   border: none;
@@ -416,17 +416,18 @@ body.mode .list-item {
 .btn--back:hover {
   cursor: pointer;
 }
-
 @media (max-width: 55em) {
   .section {
     -ms-grid-columns: (1fr) [3];
     grid-template-columns: repeat(3, 1fr);
+    padding-top: 6.4rem;
   }
 }
 @media (max-width: 48em) {
   .section {
     -ms-grid-columns: (1fr) [2];
     grid-template-columns: repeat(2, 1fr);
+    padding-top: 6.4rem;
   }
   .form {
     -webkit-box-orient: vertical;
@@ -468,5 +469,6 @@ body.mode .list-item {
     grid-template-columns: 1fr;
     padding: 0 6.4rem;
     padding-bottom: 6.4rem;
+    padding-top: 6.4rem;
   }
 }
